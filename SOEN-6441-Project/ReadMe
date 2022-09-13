@@ -1,0 +1,28 @@
+Step 1:- Install MYSQL
+Step 2:- Create connections with the following details:-
+Port :- 3306
+username root
+password admin
+Step 3:- Open MySQL and create database DummyDb or execute the below queries
+create database DummyDb;
+
+CREATE TABLE UserDetail(id bigint PRIMARY KEY 
+auto_increment, 
+name varchar(200) not null,
+designation varchar(200) not null);
+
+insert into UserDetail values (1,'Arawn','JAVA 2');
+
+Step 4:- Import the project, Below are the file details
+
+Connections.java :- 
+Open datbase connection details and contains query Operation such as Select,Insert,Update for UserDetails
+
+UserDetails.java:- 
+Contains Entity Class (Getter and Setter) for UserDetail table
+
+UserManager.java
+Contains Instance and setter for UserDetails
+
+Launchers.java 
+Main Method to run Connections.java class and fetch data from database
