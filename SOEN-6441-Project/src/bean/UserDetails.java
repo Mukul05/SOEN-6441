@@ -1,11 +1,11 @@
-package entities;
+package bean;
 
 public class UserDetails {
 
 	private long id;
 	private String name;
 	private String designation;
-	
+		
 	public long getId() {
 		return id;
 	}
