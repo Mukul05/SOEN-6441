@@ -3,8 +3,8 @@ package ui;
 import java.sql.SQLException;
 
 import Database.Connections;
+import services.UserServiceInterface;
 import services.UserService;
-import services.UserServiceImpl;
 
 public class Launchers {
 
@@ -15,7 +15,7 @@ public class Launchers {
 	
 	public static void readUser() {
 		try {
-			UserService userService = new UserServiceImpl();
+			UserServiceInterface userService = new UserService();
 			userService.readUser();
 		}catch (ClassNotFoundException | SQLException e) {
 			//e.printStackTrace();

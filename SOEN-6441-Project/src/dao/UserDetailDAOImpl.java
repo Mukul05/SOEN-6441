@@ -4,124 +4,133 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Database.Connections;
 import bean.UserDetails;
+
 public class UserDetailDAOImpl implements UserDetailDAO {
 
 	private static Connection conn = null;
-	private static PreparedStatement pstmt = null;
-	
+	private static int DEFAULT_PAGE_NUMBER = 1;
+	private static int DEFAULT_PAGE_SIZE = 10;
+
+	private UserDetailDAOImpl() {}
+
+	private static class SingletonHelper {
+		private static final UserDetailDAOImpl INSTANCE = new UserDetailDAOImpl();
+	}
+
+	public static UserDetailDAOImpl getInstance() {
+		return SingletonHelper.INSTANCE;
+	}
+
 	@Override
-	public int insertUser(UserDetails bean) throws ClassNotFoundException, SQLException, Exception {
-		
+	public boolean insertUser(UserDetails bean) throws ClassNotFoundException, SQLException, Exception {
+
 		try {
-			int rowsInsertCount = 0;
 			String firstName = bean.getFirstName();
 			String lastName = bean.getLastName();
 			String email = bean.getEmail();
-			
+
 			String insertstmt = "insert into UserDetail values(?,?,?)";
 			conn = Connections.getDBConnection();
 			PreparedStatement pstatement = conn.prepareStatement(insertstmt);
 			pstatement.setString(1, firstName);
 			pstatement.setString(2, lastName);
 			pstatement.setString(3, email);
-			
-			rowsInsertCount = pstatement.executeUpdate();
-			
-			return rowsInsertCount;
+
+			int result = pstatement.executeUpdate();
+
+			return result > 0;
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			
+
 			Connections.getDBCloseConnection();
 		}
 	}
-	
+
 	@Override
-	public void readUser() throws ClassNotFoundException, SQLException {
+	public List<UserDetails> readUser() throws ClassNotFoundException, SQLException {
 		try {
-			String retrievedata = "select * from UserDetail";
+			return readUser(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	@Override
+	public List<UserDetails> readUser(int pageNumber, int pageSize) throws ClassNotFoundException, SQLException {
+		try {
+			List<UserDetails> users = new ArrayList<>();
+			
+			String query = "SELECT * FROM UserDetail";
+			int offset = (pageSize) * (pageNumber - 1);
+			query = query + "LIMIT" + offset + "," + pageSize;
 			conn = Connections.getDBConnection();
-			PreparedStatement pstatement = conn.prepareStatement(retrievedata);
+			PreparedStatement pstatement = conn.prepareStatement(query);
 			ResultSet resultSet = pstatement.executeQuery();
+			
 			while (resultSet.next()) {
-				System.out.println("Fist Name: " + resultSet.getString("firstName") + "\nLast Name: "
-						+ resultSet.getString("lastName") + "\nEMail: " + resultSet.getString("email"));
-						System.out.println("===========================================");
+				int id = resultSet.getInt("id");
+				String firstName = resultSet.getString("firstName");
+				String lastName = resultSet.getString("lastName");
+				String email = resultSet.getString("email");
+				UserDetails currentUser = new UserDetails(id, firstName, lastName, email);
+				users.add(currentUser);
 			}
+			return users;
 		} catch (Exception e) {
 			throw e;
 		}
 		finally {
-					Connections.getDBCloseConnection();
-					}
+			Connections.getDBCloseConnection();
+			}
 	}
-	
+
 	@Override
-	public void updateUser(UserDetails bean) throws SQLException, ClassNotFoundException {
+	public boolean updateUser(UserDetails user) throws SQLException, ClassNotFoundException {
 		try {
-			String firstName = bean.getFirstName();
-			String lastName = bean.getLastName();
-			String email = bean.getEmail();
-			
-			String updatedata = "update UserDetail set email=? where firstName= ? and lastName = ?";
+			String firstName = user.getFirstName();
+			String lastName = user.getLastName();
+			String email = user.getEmail();
+
+			String query = "UPDATE UserDetail SET email=? WHERE firstName= ? AND lastName = ?";
 			conn = Connections.getDBConnection();
-			PreparedStatement pstatement = conn.prepareStatement(updatedata);
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			
 			pstatement.setString(1, firstName);
 			pstatement.setString(2, lastName);
 			pstatement.setString(3, email);
-			boolean updateresult = pstatement.execute();
-			if (updateresult != true) {
-				System.out.println("User updated successfully!!");
-			} else {
-				System.out.println("OOps some thing went wrong!! ");
-			}
+			
+			int result = pstatement.executeUpdate();
+
+			return result > 0;
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			
-				Connections.getDBCloseConnection();
-			}
+			Connections.getDBCloseConnection();
+		}
 	}
-	
+
 	@Override
-	public void deleteUser(UserDetails bean) throws ClassNotFoundException, SQLException {
+	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException {
 		try {
-			String firstName = bean.getFirstName();
-			String lastName = bean.getLastName();
-			String email = bean.getEmail();
-			boolean firstNameExist = false;
-			boolean lastNameExist = false;
-			boolean emailExist = false;
-			if (firstName != null && firstName != "")
-				firstNameExist = true;
+			String query = "DELETE from UserDetail WHERE id = ? ";
 			
-			if (lastName != null && lastName != "")
-				lastNameExist = true;
-			
-			if (email != null && email != "")
-				emailExist = true;
-			
-			String deletedata="";
-			
-			if(firstNameExist)
-			deletedata = "DELETE from UserDetail WHERE firstName = ? " ;
 			conn = Connections.getDBConnection();
-			PreparedStatement pstatement = conn.prepareStatement(deletedata);
-			pstatement.setString(1, firstName);
-			int deleted = pstatement.executeUpdate();
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			pstatement.setInt(1, userId);
 			
+			int result = pstatement.executeUpdate();
+			
+			return result > 0;
 		} catch (Exception e) {
 			throw e;
 		} finally {
-							Connections.getDBCloseConnection();
-					}
+			Connections.getDBCloseConnection();
+		}
 
 	}
 }
-
-	
-	
-
