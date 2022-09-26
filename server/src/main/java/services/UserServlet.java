@@ -19,12 +19,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/MyUser")
+@WebServlet("/hello2")
 public class UserServlet extends HttpServlet {
-  
+  private static final long serialVersionUID = 1L;
   private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
   private static final Logger LOGGER = Logger.getLogger(UserServlet.class.getName());
 
+  public UserServlet() {
+      super();
+  }
+  
   protected void doPost(HttpServletRequest req, HttpServletRequest resp) throws ServletException, IOException {
 
   }
@@ -32,6 +36,7 @@ public class UserServlet extends HttpServlet {
   
   protected void doGet(HttpServletRequest req, HttpServletRequest response) throws ServletException, IOException {
     String action = req.getServletPath();
+    LOGGER.log(Level.INFO, "here");
     try {
       switch (action) {
         case "/user":
@@ -68,7 +73,7 @@ public class UserServlet extends HttpServlet {
     out.flush();  
   }
 
-  private void createeUser(HttpServletRequest req, HttpServletRequest response) throws SQLException, ServletException, IOException{
+  private void createUser(HttpServletRequest req, HttpServletRequest response) throws SQLException, ServletException, IOException{
 	
 	int id = Integer.parseInt(req.getParameter("UserId"));
     String firstName = req.getParameter("firstName");
