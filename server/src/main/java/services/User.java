@@ -83,4 +83,78 @@ public class User extends HttpServlet {
 		doGet(request, response);
 	}
 
+	private void createUser(HttpServletRequest req, HttpServletRequest response) throws SQLException, ServletException, IOException{
+		
+		int id = Integer.parseInt(req.getParameter("UserId"));
+	    String firstName = req.getParameter("firstName");
+	    String lastName = req.getParameter("lastName");
+	    String email = req.getParameter("email");
+	    UserDetails user = new UserDetails(id, firstName, lastName, email);
+	    boolean success = false;
+		try {
+			success = userDao.insertUser(user);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    String responseMessage = success ? "Succesfully created user" : "Failed to create user";
+	    
+	    PrintWriter out = ((ServletResponse) response).getWriter();
+	    ((ServletResponse) response).setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    out.print(responseMessage);
+	    out.flush();  
+	  }
+
+	  private void updateUser(HttpServletRequest req, HttpServletRequest response) throws SQLException, ServletException, IOException{
+		int id = Integer.parseInt(req.getParameter("UserId"));
+	    String firstName = req.getParameter("firstName");
+	    String lastName = req.getParameter("lastName");
+	    String email = req.getParameter("email");
+	    UserDetails user = new UserDetails(id, firstName, lastName, email);
+	    boolean success = false;
+		try {
+			success = userDao.updateUser(user);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    String responseMessage = success ? "Succesfully updated user details" : "Failed to update user details";
+	    
+	    PrintWriter out = ((ServletResponse) response).getWriter();
+	    ((ServletResponse) response).setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    out.print(responseMessage);
+	    out.flush();  
+	  }
+
+	  private void deleteUser(HttpServletRequest req, HttpServletRequest response) throws SQLException, ServletException, IOException{
+		int id = Integer.parseInt(req.getParameter("UserId"));;
+	    boolean success = false;
+		try {
+			success = userDao.deleteUser(id);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    String responseMessage = success ? "Succesfully deleted user" : "Failed to delete user";
+	    
+	    PrintWriter out = ((ServletResponse) response).getWriter();
+	    ((ServletResponse) response).setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    out.print(responseMessage);
+	    out.flush();  
+	  }
 }
