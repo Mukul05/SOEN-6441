@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="SOEN6441-API">
+        
+    <wb-module deploy-name="server">
+                
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <property name="context-root" value="SOEN6441-API"/>
-        <property name="java-output-path" value="/SOEN6441-API/build/classes"/>
+                
+        <property name="java-output-path" value="/server/build/classes"/>
+        <property name="context-root" value="server"/>
+            
     </wb-module>
+    
 </project-modules>

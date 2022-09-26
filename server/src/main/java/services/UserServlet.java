@@ -14,11 +14,12 @@ import dao.UserDetailDAOImpl;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
+@WebServlet("/MyUser")
 public class UserServlet extends HttpServlet {
   
   private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
@@ -28,6 +29,7 @@ public class UserServlet extends HttpServlet {
 
   }
 
+  
   protected void doGet(HttpServletRequest req, HttpServletRequest response) throws ServletException, IOException {
     String action = req.getServletPath();
     try {

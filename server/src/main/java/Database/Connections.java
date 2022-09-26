@@ -12,7 +12,7 @@ public class Connections {
 	public static String url = "jdbc:mysql://localhost:3306/DummyDb";
 	public static String username = "root";
 	public static String password = "admin";
-	private static Connection conn = null;
+	public static Connection conn = null;
 	
 	public static Connection getDBConnection() throws ClassNotFoundException, SQLException {
 		

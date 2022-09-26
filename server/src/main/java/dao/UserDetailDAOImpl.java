@@ -92,6 +92,8 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	@Override
 	public boolean updateUser(UserDetails user) throws SQLException, ClassNotFoundException {
 		try {
+			int id = user.getId();
+			
 			String firstName = user.getFirstName();
 			String lastName = user.getLastName();
 			String email = user.getEmail();
