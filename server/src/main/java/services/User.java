@@ -25,7 +25,7 @@ import java.io.IOException;
 public class User extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
-	private static final Logger LOGGER = Logger.getLogger(UserServlet.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(User.class.getName());
 
     /**
      * @see HttpServlet#HttpServlet()

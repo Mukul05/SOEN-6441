@@ -2,20 +2,45 @@ package Database;
 
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.sql.SQLException;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import services.User;
 
 public class Connections {
 	
-	public static String url = "jdbc:mysql://localhost:3306/DummyDb";
-	public static String username = "root";
-	public static String password = "admin";
+	public static String url = null;
+	public static String username = null;
+	public static String password = null;
 	public static Connection conn = null;
-	
+	private static final Logger LOGGER = Logger.getLogger(Connections.class.getName());
+
 	public static Connection getDBConnection() throws ClassNotFoundException, SQLException {
 		
+		String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("database.properties")).getPath();
+		InputStream input = null;
+		try {
+			input = new FileInputStream(rootPath);
+			Properties prop = new Properties();
+			prop.load(input);
+			url = prop.getProperty("url");
+			username = prop.getProperty("username");
+			password = prop.getProperty("password");
+		} catch (FileNotFoundException e) {
+			LOGGER.log(Level.SEVERE, "database.properties not found");
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "IO error for database.properties");
+		}
 		conn = DriverManager.getConnection(url, username, password);
 		System.out.println("Connection established!!");
 		
