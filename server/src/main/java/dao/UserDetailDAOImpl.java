@@ -55,7 +55,26 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	@Override
 	public List<UserDetails> readUser() throws ClassNotFoundException, SQLException {
 		try {
-			return readUser(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+			//return readUser(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+			List<UserDetails> users = new ArrayList<>();
+			String query = "SELECT * FROM UserDetail";
+			conn = Connections.getDBConnection();
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			ResultSet resultSet = pstatement.executeQuery();
+
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String firstName = resultSet.getString("firstName");
+				System.out.println(firstName);
+				String lastName = resultSet.getString("lastName");
+				String email = resultSet.getString("email");
+				UserDetails currentUser = new UserDetails( id, firstName, lastName, email);
+				users.add(currentUser);
+				
+			}
+			
+			return users;
+			
 		} catch (Exception e) {
 			throw e;
 		}
@@ -64,10 +83,11 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	public List<UserDetails> readUser(int pageNumber, int pageSize) throws ClassNotFoundException, SQLException {
 		try {
 			List<UserDetails> users = new ArrayList<>();
-			
+			pageSize=5;
+			pageNumber=5;
 			String query = "SELECT * FROM UserDetail";
-			int offset = (pageSize) * (pageNumber - 1);
-			query = query + "LIMIT" + offset + "," + pageSize;
+			//int offset = (pageSize) * (pageNumber - 1);
+			//query = query 	+ "LIMIT" + offset + "," + pageSize;
 			conn = Connections.getDBConnection();
 			PreparedStatement pstatement = conn.prepareStatement(query);
 			ResultSet resultSet = pstatement.executeQuery();
@@ -77,7 +97,7 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 				String firstName = resultSet.getString("firstName");
 				String lastName = resultSet.getString("lastName");
 				String email = resultSet.getString("email");
-				UserDetails currentUser = new UserDetails(id, firstName, lastName, email);
+				UserDetails currentUser = new UserDetails( id, firstName, lastName, email);
 				users.add(currentUser);
 			}
 			return users;

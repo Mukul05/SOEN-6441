@@ -51,12 +51,12 @@ public class User extends HttpServlet {
 	}
 
 	private void getUsers(HttpServletRequest request, HttpServletResponse response) {
-		Integer pageNumber = Integer.valueOf(request.getParameter("pageNumber"));
-	    Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+		//Integer pageNumber = Integer.valueOf(request.getParameter("pageNumber"));
+	   // Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
 	    List<UserDetails> users = null;
 	    LOGGER.log(Level.INFO, "here");
 		try {
-			users = userDao.readUser(pageNumber, pageSize);
+			users = userDao.readUser();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
