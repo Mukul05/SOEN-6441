@@ -6,9 +6,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.jasper.JspC;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mysql.cj.xdevapi.JsonArray;
 
 import bean.UserDetails;
 import dao.UserDetailDAOImpl;
@@ -20,6 +28,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 
 @WebServlet("/api")
 public class User extends HttpServlet {
@@ -49,7 +58,13 @@ public class User extends HttpServlet {
 	          dispatcher.include(request,(ServletResponse) response);
 	    }
 	}
+	
+	
+	
+	
 
+	
+	
 	private void getUsers(HttpServletRequest request, HttpServletResponse response) {
 		//Integer pageNumber = Integer.valueOf(request.getParameter("pageNumber"));
 	   // Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
@@ -72,7 +87,11 @@ public class User extends HttpServlet {
 		}
 	    ((ServletResponse) response).setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-	    out.print(users);
+
+	   
+	    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	    String json = gson.toJson(users);
+	     out.print(json);
 	    out.flush();  
 	}
 
