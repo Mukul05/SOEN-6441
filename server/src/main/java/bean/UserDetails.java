@@ -1,5 +1,9 @@
 package bean;
 
+
+
+
+
 public class UserDetails {
 
 	private int id;
