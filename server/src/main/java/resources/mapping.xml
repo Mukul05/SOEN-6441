@@ -1,0 +1,27 @@
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" version="2.0">
+	<description>XML User mapping</description>
+	
+	<entity class="UserDetails">
+		<table name="UserDetail" />
+		
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+			
+			<basic name="firstName">
+				<column name="firstName" length="200" />
+			</basic>
+			
+			<basic name="lastName">
+				<column name="lastName" length="200" />
+			</basic>
+			
+			<basic name="email">
+				<column name="email" length="200" />
+			</basic>
+		</attributes>
+	
+	</entity>
+</entity-mappings>
+    

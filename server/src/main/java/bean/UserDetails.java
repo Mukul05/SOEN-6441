@@ -1,14 +1,22 @@
 package bean;
 
+import javax.persistence.*;
 
-
-
-
+@Entity
+@Table(name = "userdetail")
 public class UserDetails {
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Column(name = "firstName", nullable = false, length = 150)
 	private String firstName;
+	
+	@Column(name = "lastName", nullable = false, length = 150)
 	private String lastName;
+	
+	@Column(name = "email", nullable = false, length = 150)
 	private String email;
 	
 	public void UserDetails() {}
