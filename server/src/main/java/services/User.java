@@ -1,7 +1,7 @@
 package services;
 
 import java.sql.SQLException;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -35,7 +35,9 @@ public class User extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
 	private static final Logger LOGGER = Logger.getLogger(User.class.getName());
-
+	private static int DEFAULT_PAGE_NUMBER = 1;
+	private static int DEFAULT_PAGE_SIZE = 10;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -59,19 +61,100 @@ public class User extends HttpServlet {
 	    }
 	}
 	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getServletPath();
+	    switch (action) {
+	        case "/user":
+	        try {
+				createUser(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	          break;
+	        default:
+	          ((HttpServletResponse) response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+	          RequestDispatcher dispatcher = request.getRequestDispatcher("/user");
+	          dispatcher.include(request,(ServletResponse) response);
+	    }
+	}
 	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getServletPath();
+	    switch (action) {
+	        case "/user":
+	        try {
+				deleteUser(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	          break;
+	        default:
+	          ((HttpServletResponse) response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+	          RequestDispatcher dispatcher = request.getRequestDispatcher("/user");
+	          dispatcher.include(request,(ServletResponse) response);
+	    }
+	}
 	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getServletPath();
+	    switch (action) {
+	        case "/user":
+	        try {
+				updateUser(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	          break;
+	        default:
+	          ((HttpServletResponse) response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+	          RequestDispatcher dispatcher = request.getRequestDispatcher("/user");
+	          dispatcher.include(request,(ServletResponse) response);
+	    }
+	}
 	
-
-	
-	
-	private void getUsers(HttpServletRequest request, HttpServletResponse response) {
-		//Integer pageNumber = Integer.valueOf(request.getParameter("pageNumber"));
-	   // Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+	private void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String pageNumber = request.getParameter("pageNumber");
+	    String pageSize = request.getParameter("pageSize");
+	    if(!UserDetails.validateGet(pageNumber, pageSize)) {
+	    	PrintWriter out = response.getWriter();
+		    String responseMessage = "Invalid request parameters";
+	    	out.print(responseMessage);
+	    	out.flush();
+	    	return;
+	    }
 	    List<UserDetails> users = null;
 	    LOGGER.log(Level.INFO, "here");
 		try {
-			users = userDao.readUser();
+			int pNum = DEFAULT_PAGE_NUMBER;
+			int pSize = DEFAULT_PAGE_SIZE;
+			if (pageNumber != null) {
+				pNum = Integer.parseInt(pageNumber);
+			}
+			if (pageSize != null) {
+				pSize = Integer.parseInt(pageSize);
+			}
+			users = userDao.readUser(pNum, pSize);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -82,7 +165,6 @@ public class User extends HttpServlet {
 		try {
 			out = ((ServletResponse) response).getWriter();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    ((ServletResponse) response).setContentType("application/json");
@@ -91,35 +173,23 @@ public class User extends HttpServlet {
 	   
 	    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	    String json = gson.toJson(users);
-	     out.print(json);
+	    out.print(json);
 	    out.flush();  
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
 
-	private void createUser(HttpServletRequest req, HttpServletRequest response) throws SQLException, ServletException, IOException{
-		
-		int id = Integer.parseInt(req.getParameter("UserId"));
-	    String firstName = req.getParameter("firstName");
-	    String lastName = req.getParameter("lastName");
-	    String email = req.getParameter("email");
-	    UserDetails user = new UserDetails(id, firstName, lastName, email);
+	private void createUser(HttpServletRequest req, HttpServletResponse response) throws SQLException, ServletException, IOException{
+	    BufferedReader reader = req.getReader();
+	    Gson gson = new Gson(); 	
+	    UserDetails userData = gson.fromJson(reader, UserDetails.class);
 	    boolean success = false;
 		try {
-			success = userDao.insertUser(user);
+			success = userDao.insertUser(userData);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    String responseMessage = success ? "Succesfully created user" : "Failed to create user";
@@ -131,15 +201,14 @@ public class User extends HttpServlet {
 	    out.flush();  
 	  }
 
-	  private void updateUser(HttpServletRequest req, HttpServletRequest response) throws SQLException, ServletException, IOException{
-		int id = Integer.parseInt(req.getParameter("UserId"));
-	    String firstName = req.getParameter("firstName");
-	    String lastName = req.getParameter("lastName");
-	    String email = req.getParameter("email");
-	    UserDetails user = new UserDetails(id, firstName, lastName, email);
+	  private void updateUser(HttpServletRequest req, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		int id = Integer.parseInt(req.getParameter("userId"));
+		BufferedReader reader = req.getReader();
+	    Gson gson = new Gson(); 	
+	    UserDetails userData = gson.fromJson(reader, UserDetails.class);
 	    boolean success = false;
 		try {
-			success = userDao.updateUser(user);
+			success = userDao.updateUser(id, userData);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,16 +225,14 @@ public class User extends HttpServlet {
 	    out.flush();  
 	  }
 
-	  private void deleteUser(HttpServletRequest req, HttpServletRequest response) throws SQLException, ServletException, IOException{
-		int id = Integer.parseInt(req.getParameter("UserId"));;
+	  private void deleteUser(HttpServletRequest req, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		int id = Integer.parseInt(req.getParameter("userId"));;
 	    boolean success = false;
 		try {
 			success = userDao.deleteUser(id);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    String responseMessage = success ? "Succesfully deleted user" : "Failed to delete user";

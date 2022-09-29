@@ -58,6 +58,17 @@ public class UserDetails {
 		this.email = email;
 	}
 	
+	public static boolean validateGet(String pageNumber, String pageSize) {
+		boolean isValid = true;
+		if (pageNumber != null && Integer.parseInt(pageNumber) < 1) {
+			isValid = false;
+		}
+		if (pageSize != null && Integer.parseInt(pageSize) < 0) {
+			isValid = false;
+		}
+		return isValid;
+	}
+	
 
 		
 }

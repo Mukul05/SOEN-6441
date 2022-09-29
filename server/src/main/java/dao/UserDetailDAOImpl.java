@@ -30,16 +30,18 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	public boolean insertUser(UserDetails bean) throws ClassNotFoundException, SQLException, Exception {
 
 		try {
+			int id = bean.getId();
 			String firstName = bean.getFirstName();
 			String lastName = bean.getLastName();
 			String email = bean.getEmail();
 
-			String insertstmt = "insert into UserDetail values(?,?,?)";
+			String insertstmt = "insert into UserDetail values(?,?,?,?)";
 			conn = Connections.getDBConnection();
 			PreparedStatement pstatement = conn.prepareStatement(insertstmt);
-			pstatement.setString(1, firstName);
-			pstatement.setString(2, lastName);
-			pstatement.setString(3, email);
+			pstatement.setInt(1, id);
+			pstatement.setString(2, firstName);
+			pstatement.setString(3, lastName);
+			pstatement.setString(4, email);
 
 			int result = pstatement.executeUpdate();
 
@@ -83,11 +85,9 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	public List<UserDetails> readUser(int pageNumber, int pageSize) throws ClassNotFoundException, SQLException {
 		try {
 			List<UserDetails> users = new ArrayList<>();
-			pageSize=5;
-			pageNumber=5;
-			String query = "SELECT * FROM UserDetail";
-			//int offset = (pageSize) * (pageNumber - 1);
-			//query = query 	+ "LIMIT" + offset + "," + pageSize;
+			String query = "SELECT * FROM UserDetail ";
+			int offset = (pageSize) * (pageNumber - 1);
+			query = query 	+ "LIMIT " + offset + "," + pageSize;
 			conn = Connections.getDBConnection();
 			PreparedStatement pstatement = conn.prepareStatement(query);
 			ResultSet resultSet = pstatement.executeQuery();
@@ -110,21 +110,21 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	}
 
 	@Override
-	public boolean updateUser(UserDetails user) throws SQLException, ClassNotFoundException {
-		try {
-			int id = user.getId();
+	public boolean updateUser(int userId, UserDetails user) throws SQLException, ClassNotFoundException {
+		try {		
 			
 			String firstName = user.getFirstName();
 			String lastName = user.getLastName();
 			String email = user.getEmail();
 
-			String query = "UPDATE UserDetail SET email=? WHERE firstName= ? AND lastName = ?";
+			String query = "UPDATE UserDetail SET firstName= ? ,lastName = ? , email=? WHERE id = ?";
 			conn = Connections.getDBConnection();
 			PreparedStatement pstatement = conn.prepareStatement(query);
 			
 			pstatement.setString(1, firstName);
 			pstatement.setString(2, lastName);
 			pstatement.setString(3, email);
+			pstatement.setInt(4, userId);
 			
 			int result = pstatement.executeUpdate();
 
@@ -139,7 +139,7 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	@Override
 	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException {
 		try {
-			String query = "DELETE from UserDetail WHERE id = ? ";
+			String query = "DELETE from UserDetail WHERE id = ?";
 			
 			conn = Connections.getDBConnection();
 			PreparedStatement pstatement = conn.prepareStatement(query);
@@ -156,3 +156,4 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 
 	}
 }
+
