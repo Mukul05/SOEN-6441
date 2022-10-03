@@ -5,18 +5,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.jasper.JspC;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mysql.cj.xdevapi.JsonArray;
 
 import bean.UserDetails;
 import dao.UserDetailDAOImpl;
@@ -27,7 +21,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 
 @WebServlet("/api")

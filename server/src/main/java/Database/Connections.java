@@ -1,9 +1,6 @@
 package Database;
 
 
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,12 +8,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import services.User;
 
 public class Connections {
 	

@@ -13,8 +13,6 @@ import bean.UserDetails;
 public class UserDetailDAOImpl implements UserDetailDAO {
 
 	private static Connection conn = null;
-	private static int DEFAULT_PAGE_NUMBER = 1;
-	private static int DEFAULT_PAGE_SIZE = 10;
 
 	public UserDetailDAOImpl() {}
 
