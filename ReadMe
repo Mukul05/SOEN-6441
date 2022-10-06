@@ -6,12 +6,18 @@ password admin
 Step 3:- Open MySQL and create database DummyDb or execute the below queries
 create database DummyDb;
 
+ use DummyDb
+ 
+
 CREATE TABLE UserDetail(id bigint PRIMARY KEY 
 auto_increment, 
-name varchar(200) not null,
-designation varchar(200) not null);
+firstName varchar(200) not null,
+lastName varchar(200) not null,
+email varchar(200) not null);
 
-insert into UserDetail values (1,'Arawn','JAVA 2');
+insert into UserDetail values (3,'Mukul','Kumar','mkumar@gmail.com');
+
+commit;
 
 Step 4:- Import the project, Below are the file details
 
