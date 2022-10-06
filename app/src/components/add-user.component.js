@@ -17,7 +17,6 @@ export default class AddUser extends Component {
 
   
   onChange = (e) => {
-    console.log(e.target)
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -36,7 +35,6 @@ export default class AddUser extends Component {
           ...response,
           submitted: true
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
