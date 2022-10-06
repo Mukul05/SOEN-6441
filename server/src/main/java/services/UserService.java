@@ -39,7 +39,7 @@ public class UserService implements UserServiceInterface{
 	@Override
 	public void updateUser(UserDetails bean) throws SQLException, ClassNotFoundException {
 		try {
-			userDAO.updateUser(bean.getId(),bean);
+			userDAO.updateUser(bean.getId(),bean, bean);
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println(e.getMessage());
 		} catch(Exception e) {

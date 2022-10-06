@@ -111,7 +111,7 @@ public class User extends HttpServlet {
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
-	    switch (action) {
+		switch (action) {
 	        case "/user":
 	        try {
 				updateUser(request, response);
@@ -208,7 +208,7 @@ public class User extends HttpServlet {
 	    UserDetails userData = gson.fromJson(reader, UserDetails.class);
 	    boolean success = false;
 		try {
-			success = userDao.updateUser(id, userData);
+			success = userDao.updateUser(id, userData, userDao.currentDetail(id));
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
