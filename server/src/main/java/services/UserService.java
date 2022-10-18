@@ -25,43 +25,46 @@ public class UserService implements UserServiceInterface{
 	}
 
 	@Override
-	public void readUser() throws ClassNotFoundException, SQLException {
+	public int readUser() throws ClassNotFoundException, SQLException {
+		int count = 0;
 		try {
-			userDAO.readUser();
+			count = userDAO.readUser().size();
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println(e.getMessage());
 		} catch(Exception e) {
 			throw e;
 		}
-
-	}
-
-	@Override
-	public void updateUser(UserDetails bean) throws SQLException, ClassNotFoundException {
-		try {
-			userDAO.updateUser(bean.getId(),bean, bean);
-		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e.getMessage());
-		} catch(Exception e) {
-			throw e;
-		}
-	}
-
-	@Override
-	public void deleteUser(int id) throws ClassNotFoundException, SQLException {
-		try {
-			userDAO.deleteUser(id);
-		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println(e.getMessage());
-		} catch(Exception e) {
-			throw e;
-		}
-	}
-
-	@Override
-	public void deleteUser(UserDetails bean) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
 		
+		return count;
 	}
+
+	@Override
+	public boolean updateUser(UserDetails bean) throws SQLException, ClassNotFoundException {
+		boolean isUpdated = false;
+		UserDetails cUser = userDAO.currentDetail(bean.getId());
+		try {
+			isUpdated = userDAO.updateUser(bean.getId(),bean, cUser);
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			throw e;
+		}
+		return isUpdated;
+	}
+
+	@Override
+	public boolean deleteUser(int id) throws ClassNotFoundException, SQLException {
+		 boolean isDeleted = false;
+		try {
+			isDeleted = userDAO.deleteUser(id);
+		} catch (ClassNotFoundException | SQLException e) {
+			System.out.println(e.getMessage());
+		} catch(Exception e) {
+			throw e;
+		}
+		return isDeleted;
+	}
+
+	
 
 }

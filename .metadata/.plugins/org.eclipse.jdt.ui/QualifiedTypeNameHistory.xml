@@ -9,9 +9,7 @@
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="dao.UserDetailDAO"/>
     <fullyQualifiedTypeName name="dao.UserDetailDAOImpl"/>
-    <fullyQualifiedTypeName name="bean.UserDetails"/>
     <fullyQualifiedTypeName name="services.UserServiceImpl"/>
-    <fullyQualifiedTypeName name="services.UserService"/>
     <fullyQualifiedTypeName name="java.sql.SQLException"/>
     <fullyQualifiedTypeName name="java.util.Properties"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
@@ -38,4 +36,9 @@
     <fullyQualifiedTypeName name="javax.naming.InitialContext"/>
     <fullyQualifiedTypeName name="javax.sql.DataSource"/>
     <fullyQualifiedTypeName name="java.sql.Statement"/>
+    <fullyQualifiedTypeName name="bean.UserDetails"/>
+    <fullyQualifiedTypeName name="services.UserService"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.MethodOrderer.OrderAnnotation"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.TestMethodOrder"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.Order"/>
 </qualifiedTypeNameHistroy>

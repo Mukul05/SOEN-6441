@@ -7,10 +7,9 @@ import bean.UserDetails;
 public interface UserServiceInterface {
 	
 	public boolean insertUser(UserDetails bean) throws ClassNotFoundException, SQLException,Exception;
-	public void readUser() throws ClassNotFoundException, SQLException;
-	public void updateUser(UserDetails bean) throws SQLException, ClassNotFoundException;
-	public void deleteUser(UserDetails bean) throws ClassNotFoundException, SQLException;
-	public void deleteUser(int id) throws ClassNotFoundException, SQLException;
+	public int readUser() throws ClassNotFoundException, SQLException;
+	public boolean updateUser(UserDetails bean) throws SQLException, ClassNotFoundException;
+	public boolean deleteUser(int id) throws ClassNotFoundException, SQLException;
 
 
 }
