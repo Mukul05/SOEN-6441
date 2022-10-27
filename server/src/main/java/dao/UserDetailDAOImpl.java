@@ -205,5 +205,24 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	
 	}
 	
+	public boolean truncateTable() throws ClassNotFoundException, SQLException {
+		try {
+			String query = "TRUNCATE TABLE UserDetail";
+			
+			conn = Connections.getDBConnection();
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			
+			
+			int result = pstatement.executeUpdate();
+			
+			return result > 0;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			Connections.getDBCloseConnection();
+		}
+
+	}
+	
 }
 
