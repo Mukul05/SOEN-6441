@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/api")
+@WebServlet("/api")	
 public class User extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
@@ -43,6 +43,7 @@ public class User extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
+		response.addHeader("Access-Control-Allow-Origin", "*");
 	    switch (action) {
 	        case "/user":
 	          getUsers(request, response);
@@ -56,6 +57,10 @@ public class User extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Max-Age", "86400");
+		response.addHeader("Access-Control-Allow-Headers", "x-requested-with");
+
 	    switch (action) {
 	        case "/user":
 	        try {
@@ -80,6 +85,7 @@ public class User extends HttpServlet {
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
+		response.addHeader("Access-Control-Allow-Origin", "*");
 	    switch (action) {
 	        case "/user":
 	        try {
@@ -104,6 +110,10 @@ public class User extends HttpServlet {
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+		response.addHeader("Access-Control-Allow-Credentials", "true");
+		response.addHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS,HEAD");
 	    switch (action) {
 	        case "/user":
 	        try {
@@ -126,15 +136,43 @@ public class User extends HttpServlet {
 	    }
 	}
 	
+	private void getUserById(HttpServletRequest request, HttpServletResponse response, String userId) throws IOException {
+    	try {
+			UserDetails user = userDao.getUserById(userId);
+			PrintWriter out = null;
+			try {
+				out = ((ServletResponse) response).getWriter();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		    ((ServletResponse) response).setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		   
+		    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		    String json = gson.toJson(user);
+		    out.print(json);
+		    out.flush(); 
+		    response.getWriter().close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String userId = request.getParameter("userId");
 		String pageNumber = request.getParameter("pageNumber");
 	    String pageSize = request.getParameter("pageSize");
+	    if (userId != null) {
+	    	getUserById(request, response, userId);
+	    }
 	    if(!UserDetails.validateGet(pageNumber, pageSize)) {
 	    	PrintWriter out = response.getWriter();
 		    String responseMessage = "Invalid request parameters";
 	    	out.print(responseMessage);
 	    	out.flush();
-	    	return;
+	    	response.getWriter().close();
 	    }
 	    List<UserDetails> users = null;
 	    LOGGER.log(Level.INFO, "here");
@@ -162,7 +200,6 @@ public class User extends HttpServlet {
 		}
 	    ((ServletResponse) response).setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-
 	   
 	    Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	    String json = gson.toJson(users);

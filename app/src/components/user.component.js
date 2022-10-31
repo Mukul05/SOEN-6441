@@ -103,7 +103,7 @@ class User extends Component {
             width: '100%',
             height: '100%',
             display: 'flex',
-            'align-items': 'center',
+            alignItems: 'center',
             top: '0',
           }}
         >
@@ -137,8 +137,6 @@ class User extends Component {
               <button
                 type="button"
                 className="btn btn-danger"
-                data-toggle="modal"
-                data-target="#deleteModal"
                 onBlur={() => this.setState({ isDelete: false })}
                 onClick={() => {
                   if (this.state.isDelete) {

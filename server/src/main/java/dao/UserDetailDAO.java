@@ -8,6 +8,7 @@ import bean.UserDetails;
 public interface UserDetailDAO {
 	
 	public boolean insertUser(UserDetails bean) throws ClassNotFoundException, SQLException,Exception;
+	public UserDetails getUserById(String userId) throws ClassNotFoundException, SQLException;
 	public List<UserDetails> readUser() throws ClassNotFoundException, SQLException;
 	public List<UserDetails> readUser(int pageNumber, int pageSize) throws ClassNotFoundException, SQLException;
 	public boolean updateUser(int userId, UserDetails bean) throws SQLException, ClassNotFoundException;
