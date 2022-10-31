@@ -18,6 +18,9 @@
   <servlet-mapping>
     <servlet-name>User</servlet-name>
     <url-pattern>/user</url-pattern>
+   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>User</servlet-name>
     <url-pattern>/user/reset</url-pattern>
   </servlet-mapping>
   <resource-ref>

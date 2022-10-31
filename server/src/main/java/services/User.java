@@ -37,7 +37,7 @@ public class User extends HttpServlet {
 	private API usersapi = API.getInstance();
 	private static final Logger LOGGER = Logger.getLogger(User.class.getName());
 	private static int DEFAULT_PAGE_NUMBER = 1;
-	private static int DEFAULT_PAGE_SIZE = 10;
+	private static int DEFAULT_PAGE_SIZE = 15;
 	
     /**
      * @see HttpServlet#HttpServlet()
