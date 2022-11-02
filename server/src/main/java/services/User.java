@@ -27,9 +27,10 @@ import jakarta.servlet.http.HttpServletResponse;
 public class User extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
+	private API usersapi = API.getInstance();
 	private static final Logger LOGGER = Logger.getLogger(User.class.getName());
 	private static int DEFAULT_PAGE_NUMBER = 1;
-	private static int DEFAULT_PAGE_SIZE = 10;
+	private static int DEFAULT_PAGE_SIZE = 15;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -76,6 +77,20 @@ public class User extends HttpServlet {
 				e.printStackTrace();
 			}
 	          break;
+	        case "/user/reset":
+	        	try {
+					resetUsers(request, response);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		          break;
 	        default:
 	          ((HttpServletResponse) response).setStatus(HttpServletResponse.SC_NOT_FOUND);
 	          RequestDispatcher dispatcher = request.getRequestDispatcher("/user");
@@ -238,7 +253,7 @@ public class User extends HttpServlet {
 	    UserDetails userData = gson.fromJson(reader, UserDetails.class);
 	    boolean success = false;
 		try {
-			success = userDao.updateUser(id, userData);
+			success = userDao.updateUser(id, userData, userDao.currentDetail(id));
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -273,4 +288,21 @@ public class User extends HttpServlet {
 	    out.print(responseMessage);
 	    out.flush();  
 	  }
+	  
+	  private void resetUsers(HttpServletRequest req, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		    boolean success = false;
+			try {
+				
+				success = usersapi.resetData();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		    String responseMessage = success ? "API users created (Data Resfreshed)" : "Failed to create user";
+		    
+		    PrintWriter out = ((ServletResponse) response).getWriter();
+		    ((ServletResponse) response).setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    out.print(responseMessage);
+		    out.flush(); 
+		  }
 }

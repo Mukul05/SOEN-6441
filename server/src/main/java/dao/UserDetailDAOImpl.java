@@ -32,7 +32,11 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 			String firstName = bean.getFirstName();
 			String lastName = bean.getLastName();
 			String email = bean.getEmail();
-
+			int result = 0;
+			UserDetails cUser = currentDetail(id);
+			if (cUser == null)
+			{
+						
 			String insertstmt = "insert into UserDetail values(?,?,?,?)";
 			conn = Connections.getDBConnection();
 			PreparedStatement pstatement = conn.prepareStatement(insertstmt);
@@ -41,8 +45,19 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 			pstatement.setString(3, lastName);
 			pstatement.setString(4, email);
 
-			int result = pstatement.executeUpdate();
+			result = pstatement.executeUpdate();
 
+			
+			}
+			else
+			{
+				System.out.println("inside insert update");
+				
+				return updateUser(id,bean, cUser);
+				
+			}
+				
+			
 			return result > 0;
 		} catch (Exception e) {
 			throw e;
@@ -135,13 +150,14 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 	}
 
 	@Override
-	public boolean updateUser(int userId, UserDetails user) throws SQLException, ClassNotFoundException {
+	public boolean updateUser(int userId, UserDetails user, UserDetails cUser) throws SQLException, ClassNotFoundException {
 		try {		
 			
 			String firstName = user.getFirstName();
 			String lastName = user.getLastName();
 			String email = user.getEmail();
-
+			if(cUser.getEmail().equals(email))
+			{
 			String query = "UPDATE UserDetail SET firstName= ? ,lastName = ? , email=? WHERE id = ?";
 			conn = Connections.getDBConnection();
 			PreparedStatement pstatement = conn.prepareStatement(query);
@@ -154,6 +170,12 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 			int result = pstatement.executeUpdate();
 
 			return result > 0;
+			}
+			else
+			{	
+				System.out.println("Emailid not same");
+				return false;
+			}
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -180,5 +202,52 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 		}
 
 	}
+	
+	public UserDetails currentDetail(int id) throws ClassNotFoundException, SQLException {
+		try {
+			//return readUser(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE);
+			List<UserDetails> currentusers = new ArrayList<>();
+			String query = "SELECT * FROM UserDetail where id = ?";
+			conn = Connections.getDBConnection();
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			pstatement.setInt(1, id);
+			ResultSet resultSet = pstatement.executeQuery();
+			
+				if(resultSet.next() == false)
+					return null;
+				else
+				{
+				String firstName = resultSet.getString("firstName");
+				String lastName = resultSet.getString("lastName");
+				String email = resultSet.getString("email");
+				UserDetails currentUser = new UserDetails( id, firstName, lastName, email);
+				return currentUser;
+				}
+			
+		} catch (Exception e) {
+			throw e;
+		}
+	
+	}
+	
+	public boolean truncateTable() throws ClassNotFoundException, SQLException {
+		try {
+			String query = "TRUNCATE TABLE UserDetail";
+			
+			conn = Connections.getDBConnection();
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			
+			
+			int result = pstatement.executeUpdate();
+			
+			return result > 0;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			Connections.getDBCloseConnection();
+		}
+
+	}
+	
 }
 

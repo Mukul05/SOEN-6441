@@ -11,7 +11,8 @@ public interface UserDetailDAO {
 	public UserDetails getUserById(String userId) throws ClassNotFoundException, SQLException;
 	public List<UserDetails> readUser() throws ClassNotFoundException, SQLException;
 	public List<UserDetails> readUser(int pageNumber, int pageSize) throws ClassNotFoundException, SQLException;
-	public boolean updateUser(int userId, UserDetails bean) throws SQLException, ClassNotFoundException;
+	public boolean updateUser(int userId, UserDetails bean, UserDetails currentUser) throws SQLException, ClassNotFoundException;
 	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException;
+	public UserDetails currentDetail(int id) throws ClassNotFoundException, SQLException;
 
 }
