@@ -73,10 +73,12 @@ public class API {
         	    for (int i = 0; i < jsonArray.length(); i++) {
         	        JSONObject user = jsonArray.getJSONObject(i);
         	        System.out.println(user.getString("name"));
+        	        String Name = user.getString("name");
+        	        String[] splitName = Name.split(" ");
         	        System.out.println(user.getInt("id"));
         	        System.out.println(user.getString("username"));
         	        System.out.println(user.getString("email"));
-        	        UserDetails userData = new UserDetails(user.getInt("id"),user.getString("name"),user.getString("username"),user.getString("email"));
+        	        UserDetails userData = new UserDetails(user.getInt("id"),splitName[0],splitName[1],user.getString("email"));
         	        boolean currentuser = false;
         			try {
         				if (currentuser = true)
