@@ -16,6 +16,7 @@ import org.apache.jasper.JspC;
    
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.mysql.cj.xdevapi.JsonArray;
 
 import bean.UserDetails;
@@ -211,7 +212,8 @@ public class User extends HttpServlet {
 	    String json = gson1.toJson(users);
 	    
 	    json = "{\n users: " + json + ",\ncount: "+ userDao.userCount() +"\n}";
-	    out.print(json);
+	    JsonObject convertedObject = new Gson().fromJson(json, JsonObject.class);
+	    out.print(convertedObject);
 	    out.flush();  
 	}
 
