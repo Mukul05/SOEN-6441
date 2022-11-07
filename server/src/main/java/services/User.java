@@ -242,12 +242,12 @@ public class User extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 	    if(success == true)
 	    {
-	    responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"false\"}";
+	    responseMessage = "{\"message\":\"" + responseMessage+"\",\"error\":\"false\"}";
 	    JSONObject jsonObj = new JSONObject(responseMessage);
 	    out.print(jsonObj);
 	    }
 	    else
-	    {responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"true\"}";
+	    {responseMessage = "{\"message\":\"" + responseMessage+"\",\"error\":\"true\"}";
 	    JSONObject jsonObj = new JSONObject(responseMessage);
 	    out.print(jsonObj);
 	    }
@@ -276,12 +276,12 @@ public class User extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 	    if(success == true)
 	    {
-	    responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"false\"}";
+	    responseMessage = "{\"message\":\"" + responseMessage+"\",\"error\":\"false\"}";
 	    JSONObject jsonObj = new JSONObject(responseMessage);
 	    out.print(jsonObj);
 	    }
 	    else
-	    {responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"true\"}";
+	    {responseMessage = "{\"message\":\"" + responseMessage+"\",\"error\":\"true\"}";
 	    JSONObject jsonObj = new JSONObject(responseMessage);
 	    out.print(jsonObj);
 	    }
@@ -305,12 +305,12 @@ public class User extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 	    if(success == true)
 	    {
-	    responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"false\"}";
+	    responseMessage = "{\"message\":\"" + responseMessage+"\",\"error\":\"false\"}";
 	    JSONObject jsonObj = new JSONObject(responseMessage);
 	    out.print(jsonObj);
 	    }
 	    else
-	    {responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"true\"}";
+	    {responseMessage = "{\"message\":\"" + responseMessage+"\",\"error\":\"true\"}";
 	    JSONObject jsonObj = new JSONObject(responseMessage);
 	    out.print(jsonObj);
 	    }
