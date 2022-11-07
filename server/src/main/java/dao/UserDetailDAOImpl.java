@@ -13,8 +13,6 @@ import bean.UserDetails;
 public class UserDetailDAOImpl implements UserDetailDAO {
 
 	private static Connection conn = null;
-	private static int DEFAULT_PAGE_NUMBER = 1;
-	private static int DEFAULT_PAGE_SIZE = 10;
 
 	public UserDetailDAOImpl() {}
 
@@ -96,6 +94,33 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 			throw e;
 		}
 	}
+	
+	@Override
+	public UserDetails getUserById(String userId) throws ClassNotFoundException, SQLException {
+		try {
+			String query = "SELECT * FROM UserDetail WHERE id = ?";
+			conn = Connections.getDBConnection();
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			pstatement.setString(1, userId);
+			ResultSet resultSet = pstatement.executeQuery();
+
+			UserDetails user = null;
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String firstName = resultSet.getString("firstName");
+				System.out.println(firstName);
+				String lastName = resultSet.getString("lastName");
+				String email = resultSet.getString("email");
+				user = new UserDetails( id, firstName, lastName, email);				
+			}
+			
+			return user;
+			
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	@Override
 	public List<UserDetails> readUser(int pageNumber, int pageSize) throws ClassNotFoundException, SQLException {
 		try {

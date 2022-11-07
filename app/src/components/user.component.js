@@ -7,13 +7,25 @@ class User extends Component {
     super(props);
 
     this.state = {
+      isLoading: false,
+      isDelete: false,
       currentUser: {
         id: null,
         firstName: '',
         lastName: '',
         email: '',
-        published: false
+        published: false,
       },
+      fields: [{
+        key: 'firstName',
+        label: 'First Name',
+      }, {
+        key: 'lastName',
+        label: 'Last Name',
+      }, {
+        key: 'email',
+        label: 'Email',
+      }],
       message: '',
     };
   }
@@ -22,8 +34,8 @@ class User extends Component {
     this.getUser(this.props.router.params.id);
   }
 
-  onChange(e) {
-    this.setState(function(prevState) {
+  onChange = (e) => {
+    this.setState((prevState) => {
       return {
         currentUser: {
           ...prevState.currentUser,
@@ -33,53 +45,49 @@ class User extends Component {
     });
   }
 
-  onChangeDescription(e) {
-    const description = e.target.value;
-    
-    this.setState(prevState => ({
-      currentUser: {
-        ...prevState.currentUser,
-        description: description
-      }
-    }));
-  }
-
   getUser(id) {
     UserDataService.get(id)
       .then(response => {
         this.setState({
           currentUser: response.data
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
   }
 
-  updateUser() {
+  updateUser = () => {
+    this.setState({
+      isLoading: true,
+    });
     UserDataService.update(
       this.state.currentUser.id,
       this.state.currentUser
     )
       .then(response => {
-        console.log(response.data);
         this.setState({
-          message: 'The User was updated successfully!'
+          message: 'The User was updated successfully!',
+          isLoading: true,
         });
       })
       .catch(e => {
+        this.setState({
+          isLoading: false,
+        });
         console.log(e);
       });
   }
 
-  deleteUser() {    
+  deleteUser = () => {
     UserDataService.delete(this.state.currentUser.id)
       .then(response => {
-        console.log(response.data);
         this.props.router.navigate('/users');
       })
       .catch(e => {
+        this.setState({
+          isDelete: false,
+        });
         console.log(e);
       });
   }
@@ -88,75 +96,77 @@ class User extends Component {
     const { currentUser } = this.state;
 
     return (
-      <div>
-        {currentUser ? (
-          <div className='edit-form'>
-            <h4>User</h4>
-            <form>
-              <div className='form-group'>
-                <label htmlFor='firstName'>First Name</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='firstName'
-                  name='firstName'
-                  value={currentUser.firstName}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className='form-group'>
-                <label htmlFor='lastName'>Last Name</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='lastName'
-                  name='lastName'
-                  value={currentUser.lastName}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className='form-group'>
-                <label htmlFor='email'>Email</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='email'
-                  name='email'
-                  value={currentUser.email}
-                  onChange={this.onChange}
-                />
-              </div>
-              <div className='form-group'>
-                <label htmlFor='status'>
-                  <strong>Status:</strong>
-                </label>
-                {currentUser.published ? 'Published' : 'Pending'}
-              </div>
-            </form>
+      this.state.isLoading ? (
+        <div
+          style={{
+            position: 'fixed',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            top: '0',
+          }}
+        >
+          <div
+            className="spinner-border"
+            role="status"
+            style={{ margin: '0 auto' }}
+          />
+        </div>
+      ) : (
+        <div>
+          {currentUser ? (
+            <div className='edit-form'>
+              <h4>User</h4>
+              <form>
+                {this.state.fields.map(({ key, label }) => (
+                  <div key={key} className='form-group'>
+                    <label htmlFor={key}>{label}</label>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id={key}
+                      name={key}
+                      value={currentUser[key]}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                ))}
+              </form>
 
-            <button
-              className='badge badge-danger mr-2'
-              onClick={this.deleteUser}
-            >
-              Delete
-            </button>
-
-            <button
-              type='submit'
-              className='badge badge-success'
-              onClick={this.updateUser}
-            >
-              Update
-            </button>
-            <p>{this.state.message}</p>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a User...</p>
-          </div>
-        )}
-      </div>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onBlur={() => this.setState({ isDelete: false })}
+                onClick={() => {
+                  if (this.state.isDelete) {
+                    this.deleteUser();
+                  }
+                  else {
+                    this.setState({ isDelete: true });
+                  }
+                }}
+              >
+                {this.state.isDelete ? 'Confirm?' : 'Delete'}
+              </button>
+              <button
+                type='submit'
+                style={{ margin: 8 }}
+                className='btn btn-success'
+                onClick={this.updateUser}
+              >
+                Update
+              </button>
+              <p>{this.state.message}</p>
+            </div>
+          ) : (
+            <div>
+              <br />
+              <p>No user selected</p>
+            </div>
+          )}
+        </div>
+      )
     );
   }
 }

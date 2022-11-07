@@ -28,7 +28,7 @@ export default class UsersList extends Component {
     UserDataService.getAll()
       .then(response => {
         this.setState({
-          Users: response.data
+          users: response.data
         });
         console.log(response.data);
       })
@@ -69,7 +69,9 @@ export default class UsersList extends Component {
       <div className="list row">
         
         <div className="col-md-6">
-          <h4>Users List</h4>
+          <h4>Users List
+            <h6>(Click to edit)</h6>
+          </h4>
 
           <ul className="list-group">
             {users && users.length ? (
@@ -117,12 +119,7 @@ export default class UsersList extends Component {
                 Edit
               </Link>
             </div>
-          ) : (
-            <div>
-              <br />
-              <p>Please click on a User to edit...</p>
-            </div>
-          )}
+          ) : null}
         </div> : null}
       </div>
     );
