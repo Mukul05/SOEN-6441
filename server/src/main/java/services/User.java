@@ -53,7 +53,18 @@ public class User extends HttpServlet {
 		String action = request.getServletPath();
 	    switch (action) {
 	        case "/user":
-	          getUsers(request, response);
+	          try {
+				getUsers(request, response);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	          break;
 	        default:
 	          ((HttpServletResponse) response).setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -148,9 +159,14 @@ public class User extends HttpServlet {
 	    }
 	}
 	
-	private void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, SQLException {
 		String pageNumber = request.getParameter("pageNumber");
 	    String pageSize = request.getParameter("pageSize");
+	    String searchQuery = request.getParameter("searchQuery");
+	    BufferedReader reader = request.getReader();
+	    Gson gson = new Gson(); 	
+	    UserDetails userData = gson.fromJson(reader, UserDetails.class);
+	    boolean success = false;
 	    if(!UserDetails.validateGet(pageNumber, pageSize)) {
 	    	PrintWriter out = response.getWriter();
 		    String responseMessage = "Invalid request parameters";
@@ -169,7 +185,12 @@ public class User extends HttpServlet {
 			if (pageSize != null) {
 				pSize = Integer.parseInt(pageSize);
 			}
-			users = userDao.readUser(pNum, pSize);
+			if(searchQuery == null)
+				users = userDao.readUser(pNum, pSize);
+			else
+				users = userDao.readUser(searchQuery);
+			
+			   
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -186,8 +207,10 @@ public class User extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 
 	   
-	    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-	    String json = gson.toJson(users);
+	    Gson gson1 = new GsonBuilder().setPrettyPrinting().create();
+	    String json = gson1.toJson(users);
+	    
+	    json = "{\n users: " + json + ",\ncount: "+ userDao.userCount() +"\n}";
 	    out.print(json);
 	    out.flush();  
 	}

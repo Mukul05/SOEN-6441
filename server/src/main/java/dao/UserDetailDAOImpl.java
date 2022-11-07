@@ -123,6 +123,60 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 			Connections.getDBCloseConnection();
 			}
 	}
+	
+	@Override
+	public List<UserDetails> readUser(String name) throws ClassNotFoundException, SQLException {
+		try {
+			List<UserDetails> users = new ArrayList<>();
+			
+			String query="";
+		
+			query = "SELECT * FROM UserDetail where LOWER(firstName) like Lower('%" + name + "%') or LOWER(lastName) like Lower('%" + name + "%')";
+			
+			
+			conn = Connections.getDBConnection();
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			ResultSet resultSet = pstatement.executeQuery();
+			
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				String fn = resultSet.getString("firstName");
+				String ln = resultSet.getString("lastName");
+				String email = resultSet.getString("email");
+				UserDetails currentUser = new UserDetails( id, fn, ln, email);
+				users.add(currentUser);
+			}
+			return users;
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			Connections.getDBCloseConnection();
+			}
+	}
+	
+	@Override
+	public int userCount() throws ClassNotFoundException, SQLException {
+		try {
+			
+				String query = "SELECT count(*) as count from userDetail";
+			
+			conn = Connections.getDBConnection();
+			PreparedStatement pstatement = conn.prepareStatement(query);
+			ResultSet resultSet = pstatement.executeQuery();
+			int count =0;
+			if(resultSet.next()){
+				   count = resultSet.getInt(1);
+				}
+			
+			return count;
+		} catch (Exception e) {
+			throw e;
+		}
+		finally {
+			Connections.getDBCloseConnection();
+			}
+	}
 
 	@Override
 	public boolean updateUser(int userId, UserDetails user, UserDetails cUser) throws SQLException, ClassNotFoundException {
