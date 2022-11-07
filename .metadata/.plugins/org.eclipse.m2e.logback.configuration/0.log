@@ -2367,3 +2367,4 @@ org.eclipse.jdt.core.JavaModelException: build/classes/dao [in server] is not on
 2022-11-04 04:28:53,170 [Worker-1: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory G:\Codes\SOEN-6441-Project\server\src\test\resources
 2022-11-04 04:29:16,330 [Worker-13: Push to SOEN-6441-Project refs/heads/master - origin] INFO  o.a.s.c.u.s.e.EdDSASecurityProviderRegistrar - getOrCreateProvider(EdDSA) created instance of net.i2p.crypto.eddsa.EdDSASecurityProvider
 2022-11-04 04:29:16,491 [Worker-13: Push to SOEN-6441-Project refs/heads/master - origin] INFO  o.a.s.c.i.DefaultIoServiceFactoryFactory - No detected/configured IoServiceFactoryFactory using Nio2ServiceFactoryFactory
+2022-11-07 00:54:36,209 [Worker-4: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
