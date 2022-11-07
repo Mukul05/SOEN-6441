@@ -162,9 +162,37 @@ public class User extends HttpServlet {
 	    }
 	}
 	
+	private void getUserById(HttpServletRequest request, HttpServletResponse response, String userId) throws IOException {
+    	try {
+			UserDetails user = userDao.currentDetail(Integer.parseInt(userId));
+			PrintWriter out = null;
+			try {
+				out = ((ServletResponse) response).getWriter();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		    ((ServletResponse) response).setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+
+		    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		    String json = gson.toJson(user);
+		    out.print(json);
+		    out.flush(); 
+		    response.getWriter().close();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, SQLException {
 		String pageNumber = request.getParameter("pageNumber");
 	    String pageSize = request.getParameter("pageSize");
+	    String userId = request.getParameter("userId");
+	    if (userId != null) {
+	    	getUserById(request, response, userId);
+	    }
 	    String searchQuery = request.getParameter("searchQuery");
 	    BufferedReader reader = request.getReader();
 	    Gson gson = new Gson(); 	

@@ -41,7 +41,7 @@ export default class AddUser extends Component {
       });
   }
 
-  newUser() {
+  newUser = () => {
     this.setState({
       id: null,
       firstName: '',
@@ -56,7 +56,7 @@ export default class AddUser extends Component {
       <div className="submit-form">
         {this.state.submitted ? (
           <div>
-            <h4>You submitted successfully!</h4>
+            <h4>User created successfully!</h4>
             <button className="btn btn-success" onClick={this.newUser}>
               Add
             </button>
@@ -102,7 +102,10 @@ export default class AddUser extends Component {
               />
             </div>
 
-            <button onClick={this.saveUser} className="btn btn-success">
+            <button
+              onClick={this.saveUser} className="btn btn-success"
+              disabled={!this.state.firstName || !this.state.lastName || !this.state.email}
+            >
               Submit
             </button>
           </div>

@@ -63,7 +63,6 @@ public class API {
         	       inline += scanner.nextLine();
         	       
         	    }
-        	    System.out.println(inline);
         	    //Close the scanner
         	    scanner.close();
         	    JSONArray jsonArray = new JSONArray(inline);
@@ -72,7 +71,6 @@ public class API {
         	    userDao.truncateTable();
         	    for (int i = 0; i < jsonArray.length(); i++) {
         	        JSONObject user = jsonArray.getJSONObject(i);
-        	        System.out.println(user.getString("name"));
         	        String Name = user.getString("name");
         	        String[] splitName = Name.split(" ");
         	        System.out.println(user.getInt("id"));

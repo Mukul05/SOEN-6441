@@ -246,10 +246,11 @@ public class UserDetailDAOImpl implements UserDetailDAO {
 					return null;
 				else
 				{
+					int userId = resultSet.getInt("id");
 				String firstName = resultSet.getString("firstName");
 				String lastName = resultSet.getString("lastName");
 				String email = resultSet.getString("email");
-				UserDetails currentUser = new UserDetails( id, firstName, lastName, email);
+				UserDetails currentUser = new UserDetails( userId, firstName, lastName, email);
 				return currentUser;
 				}
 			

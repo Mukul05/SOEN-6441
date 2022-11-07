@@ -1,8 +1,18 @@
 import http from '../http-common';
 
+const DEFAULT_PAGE_NUMBER = 1;
+const DEFAULT_PAGE_SIZE = 5;
+
 class UserDataService {
-  getAll() {
-    return http.get('/user');
+
+  getAll(pageNumber = DEFAULT_PAGE_NUMBER, pageSize = DEFAULT_PAGE_SIZE, query = '') {
+    let url = '/user';
+    if (query) {
+      url += `?searchQuery=${query}`;
+    } else {
+      url += `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    }
+    return http.get(url);
   }
 
   get(id) {
