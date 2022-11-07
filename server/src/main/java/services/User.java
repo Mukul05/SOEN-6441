@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,10 +13,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.jasper.JspC;
-   
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import com.mysql.cj.xdevapi.JsonArray;
 
 import bean.UserDetails;
@@ -38,7 +40,7 @@ public class User extends HttpServlet {
 	private API usersapi = API.getInstance();
 	private static final Logger LOGGER = Logger.getLogger(User.class.getName());
 	private static int DEFAULT_PAGE_NUMBER = 1;
-	private static int DEFAULT_PAGE_SIZE = 15;
+	private static int DEFAULT_PAGE_SIZE = 10;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -186,6 +188,7 @@ public class User extends HttpServlet {
 			if (pageSize != null) {
 				pSize = Integer.parseInt(pageSize);
 			}
+			System.out.println(searchQuery);
 			if(searchQuery == null)
 				users = userDao.readUser(pNum, pSize);
 			else
@@ -237,7 +240,17 @@ public class User extends HttpServlet {
 	    PrintWriter out = ((ServletResponse) response).getWriter();
 	    ((ServletResponse) response).setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-	    out.print(responseMessage);
+	    if(success == true)
+	    {
+	    responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"false\"}";
+	    JSONObject jsonObj = new JSONObject(responseMessage);
+	    out.print(jsonObj);
+	    }
+	    else
+	    {responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"true\"}";
+	    JSONObject jsonObj = new JSONObject(responseMessage);
+	    out.print(jsonObj);
+	    }
 	    out.flush();  
 	  }
 
@@ -261,7 +274,17 @@ public class User extends HttpServlet {
 	    PrintWriter out = ((ServletResponse) response).getWriter();
 	    ((ServletResponse) response).setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-	    out.print(responseMessage);
+	    if(success == true)
+	    {
+	    responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"false\"}";
+	    JSONObject jsonObj = new JSONObject(responseMessage);
+	    out.print(jsonObj);
+	    }
+	    else
+	    {responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"true\"}";
+	    JSONObject jsonObj = new JSONObject(responseMessage);
+	    out.print(jsonObj);
+	    }
 	    out.flush();  
 	  }
 
@@ -280,7 +303,17 @@ public class User extends HttpServlet {
 	    PrintWriter out = ((ServletResponse) response).getWriter();
 	    ((ServletResponse) response).setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-	    out.print(responseMessage);
+	    if(success == true)
+	    {
+	    responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"false\"}";
+	    JSONObject jsonObj = new JSONObject(responseMessage);
+	    out.print(jsonObj);
+	    }
+	    else
+	    {responseMessage = "{\"succes\":\"" + responseMessage+"\",\"error\":\"true\"}";
+	    JSONObject jsonObj = new JSONObject(responseMessage);
+	    out.print(jsonObj);
+	    }
 	    out.flush();  
 	  }
 	  
