@@ -12,7 +12,10 @@ export default class UsersList extends Component {
       users: [],
       currentUser: null,
       currentIndex: -1,
-      searchTitle: '',
+      searchQuery: '',
+      pageNumber: 1,
+      pageSize: 5,
+      totalCount: 20
     };
   }
 
@@ -25,16 +28,31 @@ export default class UsersList extends Component {
       currentUser: null,
       currentIndex: -1
     });
-    UserDataService.getAll()
+    UserDataService.getAll(this.state.pageNumber, this.state.pageSize, this.state.searchQuery)
       .then(response => {
+        const { users = [], count = 0 } = response.data || {};
         this.setState({
-          users: response.data
+          users,
+          totalCount: count,
         });
-        console.log(response.data);
       })
       .catch(e => {
         console.log(e);
       });
+  }
+
+  handleSearch = (e) => {
+    this.setState({
+      searchQuery: e.target.value,
+    }, () => {
+      this.retrieveUsers();
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if ((prevState.pageNumber !== this.state.pageNumber) || (prevState.pageSize !== this.state.pageSize)) {
+      this.retrieveUsers();
+    }
   }
 
   setActiveUser = (user, index) => {
@@ -44,24 +62,6 @@ export default class UsersList extends Component {
     });
   }
 
-  searchTitle() {
-    this.setState({
-      currentUser: null,
-      currentIndex: -1
-    });
-
-    UserDataService.findByTitle(this.state.searchTitle)
-      .then(response => {
-        this.setState({
-          Users: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
   render() {
     const { users, currentUser, currentIndex } = this.state;
 
@@ -69,11 +69,22 @@ export default class UsersList extends Component {
       <div className="list row">
         
         <div className="col-md-6">
-          <h4>Users List
-            <h6>(Click to edit)</h6>
-          </h4>
+          <div>
+            <h4>Users List</h4>
+            <span>(Click to edit)</span>
+            <div className="input-group input-group-sm mb-3">
+              <input
+                type="text"
+                placeholder="Search by name..."
+                className="form-control"
+                aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-sm"
+                onChange={this.handleSearch}
+              />
+            </div>
+          </div>
 
-          <ul className="list-group">
+          <ul className="list-group" style={{ margin: 8 }}>
             {users && users.length ? (
               users.map((user, index) => (
                 <li
@@ -81,6 +92,7 @@ export default class UsersList extends Component {
                     'list-group-item ' +
                     (index === currentIndex ? 'active' : '')
                   }
+                  style={{ cursor: 'pointer' }}
                   onClick={() => this.setActiveUser(user, index)}
                   key={index}
                 >
@@ -88,11 +100,55 @@ export default class UsersList extends Component {
                 </li>
               ))) : 'No users found'}
           </ul>
+          <span style={{ margin: 8 }}>
+            <nav style={{ float: 'right' }}>
+              <ul className="pagination">
+                <li className={`page-item ${this.state.pageNumber === 1 ? 'disabled' : ''}`}>
+                  <button
+                    className="page-link"
+                    onClick={() => this.setState((prevState) => ({ 
+                      pageNumber: prevState.pageNumber - 1 
+                    }))}
+                  >
+                    Previous
+                  </button>
+                </li>
+                <li className={`page-item ${(this.state.pageSize * this.state.pageNumber) >= this.state.totalCount ? 'disabled' : ''}`}>
+                  <button
+                    className='page-link'
+                    onClick={() => this.setState((prevState) => ({ 
+                      pageNumber: prevState.pageNumber + 1 
+                    }))}
+                  >
+                    Next
+                  </button>
+                </li>
+              </ul>
+            </nav>
+            <select
+              className='form-select'
+              onChange={(event) => this.setState({
+                pageSize: event.target.value,
+                pageNumber: 1,
+                searchQuery: '',
+              })}
+              defaultValue={5}
+            >
+              {[5, 10, 20, 30].map(val => (
+                <option
+                  key={val}
+                  value={val}
+                >
+                  {val}
+                </option>
+              ))}
+            </select>
+          </span>
         </div>
         {users.length ? <div className="col-md-6">
           { currentUser ? (
             <div>
-              <h4>User</h4>
+              <h4>User Details</h4>
               <div>
                 <label htmlFor='firstName'>
                   <strong>First Name:</strong>
