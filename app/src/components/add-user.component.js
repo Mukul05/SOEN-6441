@@ -10,8 +10,8 @@ export default class AddUser extends Component {
       firstName: '',
       lastName: '',
       email: '',
-      published: false,
-      submitted: false
+      submitted: false,
+      error: false,
     };
   }
 
@@ -32,7 +32,7 @@ export default class AddUser extends Component {
     UserDataService.create(data)
       .then(response => {
         this.setState({
-          ...response,
+          ...response.data,
           submitted: true
         });
       })
@@ -56,7 +56,7 @@ export default class AddUser extends Component {
       <div className="submit-form">
         {this.state.submitted ? (
           <div>
-            <h4>User created successfully!</h4>
+            <h4>{this.state.error ? this.state.message : 'User created successfully!'}</h4>
             <button className="btn btn-success" onClick={this.newUser}>
               Add
             </button>

@@ -31,8 +31,8 @@ class UserDataService {
     return http.delete(`/user?userId=${id}`);
   }
 
-  findByName(name) {
-    return http.get(`/user?name=${name}`);
+  reset() {
+    return http.post('/user/reset', {});
   }
 }
 

@@ -67,7 +67,7 @@ class User extends Component {
     )
       .then(response => {
         this.setState({
-          message: 'The User was updated successfully!',
+          message: response.data.message,
           isLoading: false,
         });
       })
