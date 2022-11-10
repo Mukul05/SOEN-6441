@@ -13,22 +13,17 @@ CREATE TABLE UserDetail(id bigint PRIMARY KEY
 auto_increment, 
 firstName varchar(200) not null,
 lastName varchar(200) not null,
-email varchar(200) not null);
+email varchar(200) not null,
+UNIQUE (email));
 
 insert into UserDetail values (3,'Mukul','Kumar','mkumar@gmail.com');
 
 commit;
 
-Step 4:- Import the project, Below are the file details
+Step 4:- Import the project
 
-Connections.java :- 
-Open datbase connection details and contains query Operation such as Select,Insert,Update for UserDetails
+Step 5:- Run The Front and Backend Server
 
-UserDetails.java:- 
-Contains Entity Class (Getter and Setter) for UserDetail table
+Step 6:- To get the data first run the Reset API which will by get data from API and insert into the document.
 
-UserManager.java
-Contains Instance and setter for UserDetails
-
-Launchers.java 
-Main Method to run Connections.java class and fetch data from database
+Step 7:- Now you can update or delete data accordingly.
