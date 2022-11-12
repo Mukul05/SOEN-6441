@@ -91,9 +91,8 @@ export default class UsersList extends Component {
         {this.state.isLoading ? (
           <div
             style={{
-              position: 'fixed',
-              width: '100%',
-              height: '100%',
+              width: '100vh',
+              height: '100vh',
               display: 'flex',
               alignItems: 'center',
               top: '0',
@@ -115,7 +114,7 @@ export default class UsersList extends Component {
                 style={{ margin: 8, float: 'right' }}
               >Reset</button>
               <span>(Click to edit)</span>
-              <div className="input-group input-group-sm mb-3">
+              {users.length ? <div className="input-group input-group-sm mb-3">
                 <input
                   type="text"
                   placeholder="Search by name..."
@@ -124,69 +123,72 @@ export default class UsersList extends Component {
                   aria-describedby="inputGroup-sizing-sm"
                   onChange={this.handleSearch}
                 />
-              </div>
+              </div> : null}
             </div>
 
-            <ul className="list-group" style={{ margin: 8 }}>
-              {users && users.length ? (
-                users.map((user, index) => (
-                  <li
-                    className={
-                      'list-group-item ' +
-                      (index === currentIndex ? 'active' : '')
-                    }
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => this.setActiveUser(user, index)}
-                    key={index}
-                  >
-                    {`${user.firstName} ${user.lastName}`}
-                  </li>
-                ))) : 'No users found'}
-            </ul>
-            <span style={{ margin: 8 }}>
-              <nav style={{ float: 'right' }}>
-                <ul className="pagination">
-                  <li className={`page-item ${this.state.pageNumber === 1 ? 'disabled' : ''}`}>
-                    <button
-                      className="page-link"
-                      onClick={() => this.setState((prevState) => ({ 
-                        pageNumber: prevState.pageNumber - 1 
-                      }))}
+            {users && users.length ? (
+              <div>
+                <ul className="list-group" style={{ margin: 8 }}>
+                  {users.map((user, index) => (
+                    <li
+                      className={
+                        'list-group-item ' +
+                        (index === currentIndex ? 'active' : '')
+                      }
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => this.setActiveUser(user, index)}
+                      key={index}
                     >
-                      Previous
-                    </button>
-                  </li>
-                  <li className={`page-item ${(this.state.pageSize * this.state.pageNumber) >= this.state.totalCount ? 'disabled' : ''}`}>
-                    <button
-                      className='page-link'
-                      onClick={() => this.setState((prevState) => ({ 
-                        pageNumber: prevState.pageNumber + 1 
-                      }))}
-                    >
-                      Next
-                    </button>
-                  </li>
+                      {`${user.firstName} ${user.lastName}`}
+                    </li>
+                  ))}
                 </ul>
-              </nav>
-              <select
-                className='form-select'
-                onChange={(event) => this.setState({
-                  pageSize: event.target.value,
-                  pageNumber: 1,
-                  searchQuery: '',
-                })}
-                defaultValue={5}
-              >
-                {[5, 10, 20, 30].map(val => (
-                  <option
-                    key={val}
-                    value={val}
+                <span style={{ margin: 8 }}>
+                  <nav style={{ float: 'right' }}>
+                    <ul className="pagination">
+                      <li className={`page-item ${this.state.pageNumber === 1 ? 'disabled' : ''}`}>
+                        <button
+                          className="page-link"
+                          onClick={() => this.setState((prevState) => ({ 
+                            pageNumber: prevState.pageNumber - 1 
+                          }))}
+                        >
+                          Previous
+                        </button>
+                      </li>
+                      <li className={`page-item ${(this.state.pageSize * this.state.pageNumber) >= this.state.totalCount ? 'disabled' : ''}`}>
+                        <button
+                          className='page-link'
+                          onClick={() => this.setState((prevState) => ({ 
+                            pageNumber: prevState.pageNumber + 1 
+                          }))}
+                        >
+                          Next
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                  <select
+                    className='form-select'
+                    onChange={(event) => this.setState({
+                      pageSize: event.target.value,
+                      pageNumber: 1,
+                      searchQuery: '',
+                    })}
+                    value={this.state.pageSize}
                   >
-                    {val}
-                  </option>
-                ))}
-              </select>
-            </span>
+                    {[5, 10, 20, 30].map(val => (
+                      <option
+                        key={val}
+                        value={val}
+                      >
+                        {val}
+                      </option>
+                    ))}
+                  </select>
+                </span>
+              </div>) : <h4 style={{ margin: 32 }}>No users found</h4>
+            }
           </div>
         )}
         {users.length ? <div className="col-md-6">
