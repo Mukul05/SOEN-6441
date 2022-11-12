@@ -1,12 +1,31 @@
-Step 1:- Install MYSQL
-Step 2:- Create connections with the following details:-
+SOEN 6441 API Fetcher
+==================================
+
+This is the repository for the API_Fetch project,
+
+
+Project description
+-------------------
+
+Our goal is to  develop a system that can read API/JSON data and produce results to the application and store the data into database and perform CRUD Opertaions.
+
+Requirements
+--------------
+MySql Workbench
+Eclipse
+TomCat
+
+
+SQL Example
+--------------
+Create connections with the following details
 Port :- 3306
 username root
 password admin
-Step 3:- Open MySQL and create database DummyDb or execute the below queries
+Open MySQL and create database DummyDb or execute the below queries
 create database DummyDb;
 
- use DummyDb
+use DummyDb
  
 
 CREATE TABLE UserDetail(id bigint PRIMARY KEY 
@@ -16,14 +35,25 @@ lastName varchar(200) not null,
 email varchar(200) not null,
 UNIQUE (email));
 
-insert into UserDetail values (3,'Mukul','Kumar','mkumar@gmail.com');
+Jar Used
+----------------
+Gson 2.8.6.jar
+mysql-connector-java-8.0.29.jar
+servlet-api.jar
 
-commit;
+Documentation
+-------------
 
-Step 4:- Import the project
 
-Step 5:- Run The Front and Backend Server
 
-Step 6:- To get the data first run the Reset API which will by get data from API and insert into the document.
+Building
+========
 
-Step 7:- Now you can update or delete data accordingly.
+To build, open Eclipse,
+
+Start Server.
+
+
+Professional Services
+---------------------
+
