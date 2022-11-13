@@ -18,13 +18,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8000/users?pageNumber=1&pageSize=10",
+									"raw": "localhost:8001/server/user?pageNumber=1&pageSize=10",
 									"host": [
 										"localhost"
 									],
-									"port": "8000",
+									"port": "8001",
 									"path": [
-										"users"
+										"server",
+										"user"
 									],
 									"query": [
 										{
@@ -34,11 +35,152 @@
 										{
 											"key": "pageSize",
 											"value": "10"
+										},
+										{
+											"key": "searchQuery",
+											"value": "ervin",
+											"disabled": true
 										}
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "get",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8001/server/user?pageNumber=1&pageSize=10",
+											"host": [
+												"localhost"
+											],
+											"port": "8001",
+											"path": [
+												"server",
+												"user"
+											],
+											"query": [
+												{
+													"key": "pageNumber",
+													"value": "1"
+												},
+												{
+													"key": "pageSize",
+													"value": "10"
+												},
+												{
+													"key": "searchQuery",
+													"value": "ervin",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Nov 2022 23:51:13 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"users\": [\n        {\n            \"id\": 1,\n            \"firstName\": \"Leanne\",\n            \"lastName\": \"Graham\",\n            \"email\": \"Sincere@april.biz\"\n        },\n        {\n            \"id\": 2,\n            \"firstName\": \"Ervin\",\n            \"lastName\": \"Howell\",\n            \"email\": \"Shanna@melissa.tv\"\n        },\n        {\n            \"id\": 3,\n            \"firstName\": \"Clementine\",\n            \"lastName\": \"Bauch\",\n            \"email\": \"Nathan@yesenia.net\"\n        },\n        {\n            \"id\": 4,\n            \"firstName\": \"Patricia\",\n            \"lastName\": \"Lebsack\",\n            \"email\": \"Julianne.OConner@kory.org\"\n        },\n        {\n            \"id\": 5,\n            \"firstName\": \"Chelsey\",\n            \"lastName\": \"Dietrich\",\n            \"email\": \"Lucio_Hettinger@annie.ca\"\n        },\n        {\n            \"id\": 6,\n            \"firstName\": \"Mrs.\",\n            \"lastName\": \"Dennis\",\n            \"email\": \"Karley_Dach@jasper.info\"\n        },\n        {\n            \"id\": 7,\n            \"firstName\": \"Kurtis\",\n            \"lastName\": \"Weissnat\",\n            \"email\": \"Telly.Hoeger@billy.biz\"\n        },\n        {\n            \"id\": 8,\n            \"firstName\": \"Nicholas\",\n            \"lastName\": \"Runolfsdottir\",\n            \"email\": \"Sherwood@rosamond.me\"\n        },\n        {\n            \"id\": 9,\n            \"firstName\": \"Glenna\",\n            \"lastName\": \"Reichert\",\n            \"email\": \"Chaim_McDermott@dana.io\"\n        },\n        {\n            \"id\": 10,\n            \"firstName\": \"Clementina\",\n            \"lastName\": \"DuBuque\",\n            \"email\": \"Rey.Padberg@karina.biz\"\n        }\n    ],\n    \"count\": 10\n}"
+								},
+								{
+									"name": "search",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8001/server/user?pageNumber=1&pageSize=10&searchQuery=ervin",
+											"host": [
+												"localhost"
+											],
+											"port": "8001",
+											"path": [
+												"server",
+												"user"
+											],
+											"query": [
+												{
+													"key": "pageNumber",
+													"value": "1"
+												},
+												{
+													"key": "pageSize",
+													"value": "10"
+												},
+												{
+													"key": "searchQuery",
+													"value": "ervin"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Nov 2022 23:52:21 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"users\": [\n        {\n            \"id\": 2,\n            \"firstName\": \"Ervin\",\n            \"lastName\": \"Howell\",\n            \"email\": \"Shanna@melissa.tv\"\n        }\n    ],\n    \"count\": 10\n}"
+								}
+							]
 						},
 						{
 							"name": "Add user",
@@ -47,7 +189,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"firstName\": \"Gurjeet\",\n    \"lastName\": \"Babbar\",\n    \"email\": \"sgurjeet99@gmail.com\"\n}",
+									"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@gmail.com\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -55,17 +197,300 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8000/users",
+									"raw": "localhost:8001/server/user",
 									"host": [
 										"localhost"
 									],
-									"port": "8000",
+									"port": "8001",
 									"path": [
-										"users"
+										"server",
+										"user"
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Add user",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@gmail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8001/server/user",
+											"host": [
+												"localhost"
+											],
+											"port": "8001",
+											"path": [
+												"server",
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Nov 2022 23:52:48 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Succesfully created user\",\n    \"error\": \"false\"\n}"
+								},
+								{
+									"name": "Add user",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@gmail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8001/server/user",
+											"host": [
+												"localhost"
+											],
+											"port": "8001",
+											"path": [
+												"server",
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Nov 2022 23:52:59 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Failed to create user\",\n    \"error\": \"true\"\n}"
+								},
+								{
+									"name": "Add user",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@gmail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8001/server/user",
+											"host": [
+												"localhost"
+											],
+											"port": "8001",
+											"path": [
+												"server",
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Nov 2022 23:52:59 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Failed to create user\",\n    \"error\": \"true\"\n}"
+								}
+							]
+						},
+						{
+							"name": "reset",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8001/server/user/reset",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8001",
+									"path": [
+										"server",
+										"user",
+										"reset"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "reset",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@gmail.com\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8001/server/user/reset",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8001",
+											"path": [
+												"server",
+												"user",
+												"reset"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 08 Nov 2022 01:18:34 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "API users created (Data Resfreshed)"
+								}
+							]
 						},
 						{
 							"name": "Update user",
@@ -74,7 +499,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"firstName\": \"Gurjeet\",\n    \"lastName\": \"Babbar\",\n    \"email\": \"sgurjeet99@gmail.com\"\n}",
+									"raw": "{\n    \"firstName\": \"Leanne\",\n    \"lastName\": \"Kaur\",\n    \"email\": \"Sincere@april.biz\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -82,19 +507,20 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8000/users/:userId",
+									"raw": "http://localhost:8001/server/user?userId=1",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
-									"port": "8000",
+									"port": "8001",
 									"path": [
-										"users",
-										":userId"
+										"server",
+										"user"
 									],
-									"variable": [
+									"query": [
 										{
 											"key": "userId",
-											"value": "12345"
+											"value": "1"
 										}
 									]
 								}
@@ -107,24 +533,202 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8000/users/:userId",
+									"raw": "localhost:13983/server/user?userId=11",
 									"host": [
 										"localhost"
 									],
-									"port": "8000",
+									"port": "13983",
 									"path": [
-										"users",
-										":userId"
+										"server",
+										"user"
 									],
-									"variable": [
+									"query": [
 										{
 											"key": "userId",
-											"value": "12345"
+											"value": "11"
 										}
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Delete user",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:13983/server/user?userId=11",
+											"host": [
+												"localhost"
+											],
+											"port": "13983",
+											"path": [
+												"server",
+												"user"
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "11"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Nov 2022 23:53:43 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Succesfully deleted user\",\n    \"error\": \"false\"\n}"
+								},
+								{
+									"name": "success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:13983/server/user?userId=11",
+											"host": [
+												"localhost"
+											],
+											"port": "13983",
+											"path": [
+												"server",
+												"user"
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "11"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Nov 2022 23:53:43 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Succesfully deleted user\",\n    \"error\": \"false\"\n}"
+								},
+								{
+									"name": "failure",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:13983/server/user?userId=11",
+											"host": [
+												"localhost"
+											],
+											"port": "13983",
+											"path": [
+												"server",
+												"user"
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "11"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json;charset=UTF-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 12 Nov 2022 23:54:00 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=20"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Failed to delete user\",\n    \"error\": \"true\"\n}"
+								}
+							]
 						}
 					]
 				}

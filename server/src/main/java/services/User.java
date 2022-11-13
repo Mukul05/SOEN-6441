@@ -37,7 +37,7 @@ import java.io.IOException;
 public class User extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
-	private API usersapi = API.getInstance();
+	private ResetService resetApi = ResetService.getInstance();
 	private static final Logger LOGGER = Logger.getLogger(User.class.getName());
 	private static int DEFAULT_PAGE_NUMBER = 1;
 	private static int DEFAULT_PAGE_SIZE = 10;
@@ -349,11 +349,11 @@ public class User extends HttpServlet {
 		    boolean success = false;
 			try {
 				
-				success = usersapi.resetData();
+				success = resetApi.resetData();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		    String responseMessage = success ? "API users created (Data Resfreshed)" : "Failed to create user";
+		    String responseMessage = success ? "Reset Users (Data Resfreshed)" : "Failed to reset users";
 		    
 		    PrintWriter out = ((ServletResponse) response).getWriter();
 		    ((ServletResponse) response).setContentType("application/json");

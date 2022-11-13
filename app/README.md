@@ -1,6 +1,6 @@
-# React.js CRUD App with React Router
+# React.js CRUD App with React Router and Axios
 
-Build a React.js CRUD Application to consume Web API, display and modify data with Router & Bootstrap.
+Build a React.js CRUD Application to consume Web API, display and modify data with Router, Axios & Bootstrap.
 
 Users Application in that:
 - Each User has id, first name, last name, email.

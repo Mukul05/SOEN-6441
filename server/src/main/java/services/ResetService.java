@@ -26,17 +26,15 @@ import bean.UserDetails;
 import dao.UserDetailDAOImpl;
 
 
-
-
-public class API {
+public class ResetService {
 
 	private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
 	
 	private static class SingletonHelper {
-		private static final API INSTANCE = new API();
+		private static final ResetService INSTANCE = new ResetService();
 	}
 	
-	public static API getInstance() {
+	public static ResetService getInstance() {
 		return SingletonHelper.INSTANCE;
 	}
 	
