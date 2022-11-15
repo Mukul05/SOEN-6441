@@ -37,7 +37,7 @@ import java.io.IOException;
 public class User extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDetailDAOImpl userDao = UserDetailDAOImpl.getInstance();
-	private API usersapi = API.getInstance();
+	private ResetService usersapi = ResetService.getInstance();
 	private static final Logger LOGGER = Logger.getLogger(User.class.getName());
 	private static int DEFAULT_PAGE_NUMBER = 1;
 	private static int DEFAULT_PAGE_SIZE = 10;
