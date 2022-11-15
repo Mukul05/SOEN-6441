@@ -353,7 +353,7 @@ public class User extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		    String responseMessage = success ? "API users created (Data Resfreshed)" : "Failed to create user";
+		    String responseMessage = success ? "API users created (Data Refreshed)" : "Failed to create user";
 		    
 		    PrintWriter out = ((ServletResponse) response).getWriter();
 		    ((ServletResponse) response).setContentType("application/json");

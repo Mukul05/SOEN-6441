@@ -19,11 +19,7 @@ public class UserDetails {
 	@Column(name = "email", nullable = false, length = 150)
 	private String email;
 	
-	public void UserDetails() {}
-	public void UserDetails(int id) {
-		this.id = id;
-	}
-
+	
 	public UserDetails(int id,String firstName, String lastName, String email ) {
 		this.id = id;
 		this.firstName = firstName;
