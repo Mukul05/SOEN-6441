@@ -1,7 +1,7 @@
-SOEN 6441 API Fetcher
+SOEN 6441 Users CRUD App
 ==================================
 
-This is the repository for the API_Fetch project,
+This is the repository for Project-1 of SOEN-6441.
 
 
 Project description
