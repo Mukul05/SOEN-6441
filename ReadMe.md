@@ -11,8 +11,8 @@ Our goal is to  develop a system that can read API/JSON data and produce results
 
 Requirements
 --------------
-MySql Workbench
-Eclipse
+MySql Workbench,
+Eclipse,
 TomCat
 
 
@@ -37,13 +37,9 @@ UNIQUE (email));
 
 Jar Used
 ----------------
-Gson 2.8.6.jar
-mysql-connector-java-8.0.29.jar
-servlet-api.jar
-
-Documentation
--------------
-
+Gson 2.8.6.jar,
+mysql-connector-java-8.0.29.jar,
+servlet-api.jar,
 
 
 Building
@@ -54,6 +50,5 @@ To build, open Eclipse,
 Start Server.
 
 
-Professional Services
----------------------
+
 
