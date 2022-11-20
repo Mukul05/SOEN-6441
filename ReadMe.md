@@ -3,6 +3,7 @@ SOEN 6441 Users CRUD App
 
 This is the repository for Project-1 of SOEN-6441.
 
+Documentation/Video Link :- https://drive.google.com/drive/folders/1nbBGct91l1YOohoG26N3sL8YSEEpJxxW?usp=sharing
 
 Project description
 -------------------
