@@ -1,7 +1,7 @@
-SOEN 6441 Users CRUD App
+User Management Crud Operation
 ==================================
 
-This is the repository for Project-1 of SOEN-6441.
+Welcome to the repository of User Manager Pro, an efficient and robust platform for managing user accounts. This application is built with a powerful combination of React for the frontend and Java Spring Framework for the backend, offering a seamless experience in user management operations.
 
 Documentation/Video Link :- https://drive.google.com/drive/folders/1nbBGct91l1YOohoG26N3sL8YSEEpJxxW?usp=sharing
 
